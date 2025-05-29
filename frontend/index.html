@@ -33,7 +33,8 @@
                     </button>
                 </h2>
 
-
+                <!-- Contenedor de paginación separado -->
+                <ul id="paginationPatiend" class="pagination justify-content-end mt-3"></ul>
                 <div class="row mt-4" id="container-pacientes">
 
                     <!-- Tarjeta de paciente -->
@@ -59,25 +60,29 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar Paciente <i class="fas fa-user me-2"></i></h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar Paciente <i
+                            class="fas fa-user me-2"></i></h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form>
-                        <div class="mb-3">
-                            <label for="nombre" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="nombre"
-                                placeholder="Ingrese el nombre del paciente">
-                        </div>
-                        <div class="mb-3">
-                            <label for="correo" class="form-label">Correo Electrónico</label>
-                            <input type="email" class="form-control" id="correo"
-                                placeholder="Ingrese el correo electrónico">
-                        </div>
-                        <div class="mb-3">
-                            <label for="telefono" class="form-label">Teléfono</label>
-                            <input type="tel" class="form-control" id="telefono"
-                                placeholder="Ingrese el número de teléfono">
+                        <div class="row">
+
+                            <div class="mb-3 col-12">
+                                <label for="nombre" class="form-label">Nombre</label>
+                                <input type="text" class="form-control" id="nombre" placeholder="Nombre del paciente">
+                            </div>
+
+                            <div class="mb-3 col-6">
+                                <label for="correo" class="form-label">Correo Electrónico</label>
+                                <input type="email" class="form-control" id="correo" placeholder="ejemplo@gmail.com">
+                            </div>
+
+                            <div class="mb-3 col-6">
+                                <label for="telefono" class="form-label">Teléfono</label>
+                                <input type="tel" class="form-control" id="telefono" placeholder="3188888880">
+                            </div>
+
                         </div>
 
                     </form>
@@ -90,8 +95,11 @@
         </div>
     </div>
 
+    <script type="module" src="js/patient/getDataPatient.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!--Alertas-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 
 </html>
