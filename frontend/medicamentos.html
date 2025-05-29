@@ -17,39 +17,20 @@
             <!-- Sidebar -->
             <div class="col-md-2 sidebar d-flex flex-column">
                 <h4 class="text-center py-4"><i class="fas fa-capsules me-2"></i>MedicApp</h4>
-                <a class="bg-secondary"><i class="fas fa-user me-2"></i>Pacientes</a>
-                <a href="medicamentos.html"><i class="fas fa-pills me-2"></i>Medicamentos</a>
+                <a href="index.html"><i class="fas fa-user me-2"></i>Pacientes</a>
+                <a class="bg-secondary"><i class="fas fa-pills me-2"></i>Medicamentos</a>
                 <a href="recordatorios.html"><i class="fas fa-clock me-2"></i>Recordatorios</a>
             </div>
 
             <!-- Main content -->
             <div class="col-md-10 p-4">
-
                 <h2 class=" align-items-center">
-                    <i class="fas fa-user-friends me-2"></i>Pacientes
+                    <i class="fa-solid fa-pills"></i> Medicamentos
                     <button class="btn btn-primary rounded-circle ms-auto" aria-label="Agregar paciente"
                         data-bs-toggle="modal" data-bs-target="#exampleModal">
                         <i class="fas fa-plus"></i>
                     </button>
                 </h2>
-
-
-                <div class="row mt-4" id="container-pacientes">
-
-                    <!-- Tarjeta de paciente -->
-                    <div class="col-md-4">
-                        <div class="card shadow-sm">
-                            <div class="card-body">
-                                <h5 class="card-title"><i class="fas fa-user me-2"></i>Juan Pérez</h5>
-                                <p class="card-text"><strong>Correo:</strong> juan@mail.com</p>
-                                <p class="card-text"><strong>Tel:</strong> 3201234567</p>
-                                <a href="#" class="btn btn-primary btn-sm"><i class="fas fa-eye me-1"></i>Ver
-                                    Medicamentos</a>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
             </div>
         </div>
     </div>
@@ -59,28 +40,35 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar Paciente <i class="fas fa-user me-2"></i></h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar Medicamentos <i
+                            class="fa-solid fa-pills"></i></h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form>
-                        <div class="mb-3">
-                            <label for="nombre" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="nombre"
-                                placeholder="Ingrese el nombre del paciente">
-                        </div>
-                        <div class="mb-3">
-                            <label for="correo" class="form-label">Correo Electrónico</label>
-                            <input type="email" class="form-control" id="correo"
-                                placeholder="Ingrese el correo electrónico">
-                        </div>
-                        <div class="mb-3">
-                            <label for="telefono" class="form-label">Teléfono</label>
-                            <input type="tel" class="form-control" id="telefono"
-                                placeholder="Ingrese el número de teléfono">
-                        </div>
+                        <div class="row">
+                            <!-- Campo Nombre (col-12) -->
+                            <div class="mb-3 col-12">
+                                <label for="nombre" class="form-label">Nombre del Medicamento</label>
+                                <input type="text" class="form-control" id="nombre"
+                                    placeholder="Nombre del medicamento">
+                            </div>
 
+                            <!-- Campo Farmacia (col-md-6) -->
+                            <div class="mb-3 col-md-6">
+                                <label for="farmacia" class="form-label">Farmacia</label>
+                                <input type="text" class="form-control" id="farmacia"
+                                    placeholder="Ingrese el nombre">
+                            </div>
+
+                            <!-- Campo Fecha de vencimiento (col-md-6) -->
+                            <div class="mb-3 col-md-6">
+                                <label for="fecha" class="form-label">Fecha de vencimiento</label>
+                                <input type="date" class="form-control" id="fecha">
+                            </div>
+                        </div>
                     </form>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
