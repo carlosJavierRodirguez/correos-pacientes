@@ -28,6 +28,7 @@ public class PatientService {
         return repository.findById(id);
     }
 
+    // guardar o actualizar un paciente
     public responseDTO save(PatientDTO patientDTO) {
         // Validaciones básicas
         if (patientDTO.getName() == null || patientDTO.getName().isEmpty()) {
@@ -70,6 +71,7 @@ public class PatientService {
         }
     }
 
+    // eliminar un paciente por id
     public responseDTO deletePatient(int id) {
         if (!findById(id).isPresent()) {
             return new responseDTO(

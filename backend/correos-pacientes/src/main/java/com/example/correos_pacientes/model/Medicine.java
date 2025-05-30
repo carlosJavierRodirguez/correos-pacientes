@@ -16,7 +16,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Entity(name = "medicine")
 public class Medicine {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -28,7 +28,7 @@ public class Medicine {
     @Column(name = "expiration", nullable = false)
     private LocalDate expiration;
 
-    @Column(name = "pharmaceuticals", nullable = false)
+    @Column(name = "pharmaceuticals", length = 100, nullable = false)
     private String pharmaceuticals;
 
 }

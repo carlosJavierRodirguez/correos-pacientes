@@ -1,7 +1,7 @@
 import { deleteResource } from "../generica/eliminarDato.js";
 import { fetchWithPagination } from "../generica/obtenerDatos.js";
 import { urlApi } from "../urlApis.js";
-// import { renderGodForm } from "./godForm.js";
+import { renderPatientForm } from "./medicineForm.js";
 
 
 export const reloadPatient = () => {
@@ -33,7 +33,7 @@ export function renderPatientCard(patient) {
                 <p class="card-text">
                     <strong>Tel:</strong> ${patient.telephone}
                 </p>
-                <div class="d-flex justify-content-between mt-3">
+                <div class="d-flex justify-content-between">
                     <button class="btn btn-primary btn-sm btn-view-meds" data-id="${patient.id}">
                         <i class="fas fa-eye me-1"></i> Ver Medicamentos
                     </button>
@@ -58,9 +58,9 @@ export function renderPatientCard(patient) {
     // });
 
     // Botón: Editar
-    // card.querySelector(".btn-edit").addEventListener("click", () => {
-    //     renderPatientForm(patient); // Muestra el formulario con los datos del paciente
-    // });
+    card.querySelector(".btn-edit").addEventListener("click", () => {
+        renderPatientForm(patient); // Muestra el formulario con los datos del paciente
+    });
 
     // Botón: Eliminar
     card.querySelector(".btn-delete").addEventListener("click", () => {

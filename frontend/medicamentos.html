@@ -27,56 +27,69 @@
                 <h2 class=" align-items-center">
                     <i class="fa-solid fa-pills"></i> Medicamentos
                     <button class="btn btn-primary rounded-circle ms-auto" aria-label="Agregar paciente"
-                        data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        data-bs-toggle="modal" data-bs-target="#modalMedicamento" id="btnAgregarMedicamento">
                         <i class="fas fa-plus"></i>
                     </button>
                 </h2>
+                <!-- Contenedor de paginación separado -->
+                <ul id="pagination-medicine" class="pagination justify-content-end mt-3"></ul>
+
+                <div class="row mt-4" id="container-medicine">
+
+                    <!-- Tarjeta de meicamento -->
+
+                </div>
             </div>
+
         </div>
     </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- Modal Medicamentos -->
+    <div class="modal fade" id="modalMedicamento" tabindex="-1" aria-labelledby="tituloModalMedicamento"
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar Medicamentos <i
+                    <h1 class="modal-title fs-5" id="tituloModalMedicamento">Agregar Medicamentos <i
                             class="fa-solid fa-pills"></i></h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form id="formMedicamento">
                         <div class="row">
-                            <!-- Campo Nombre (col-12) -->
+                            <!-- Campo Nombre -->
                             <div class="mb-3 col-12">
-                                <label for="nombre" class="form-label">Nombre del Medicamento</label>
-                                <input type="text" class="form-control" id="nombre"
+                                <label for="nombre-medicamento" class="form-label">Nombre del Medicamento</label>
+                                <input type="text" class="form-control" id="nombre-medicamento"
                                     placeholder="Nombre del medicamento">
                             </div>
-
-                            <!-- Campo Farmacia (col-md-6) -->
+                            <!-- Campo Farmacia -->
                             <div class="mb-3 col-md-6">
                                 <label for="farmacia" class="form-label">Farmacia</label>
                                 <input type="text" class="form-control" id="farmacia"
-                                    placeholder="Ingrese el nombre">
+                                    placeholder="Nombre de la farmacia">
                             </div>
-
-                            <!-- Campo Fecha de vencimiento (col-md-6) -->
+                            <!-- Campo Fecha -->
                             <div class="mb-3 col-md-6">
-                                <label for="fecha" class="form-label">Fecha de vencimiento</label>
+                                <label for="fecha" class="form-label">Fecha de Vencimiento</label>
                                 <input type="date" class="form-control" id="fecha">
                             </div>
                         </div>
                     </form>
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary">Guardar</button>
+                    <button type="button" class="btn btn-primary" id="btnGuardarMedicamento">Guardar</button>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- medicine -->
+    <script type="module" src="js/medicine/getDataMedicine.js"></script>
+
+    <!--Alertas-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
