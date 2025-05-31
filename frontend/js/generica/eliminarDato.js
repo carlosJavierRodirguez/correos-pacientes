@@ -13,7 +13,7 @@ async function serverDeleteResource(id, urlBase, resourceName, reloadCallback) {
 
         if (!response.ok) throw new Error(`Error ${response.status}: ${response.statusText}`);
 
-        alertas("success", `${capitalize(resourceName)} eliminada`, `La ${resourceName} ha sido eliminada correctamente.`);
+        alertas("success", `${capitalize(resourceName)} eliminado`, `El ${resourceName} ha sido eliminado correctamente.`);
         if (typeof reloadCallback === "function") reloadCallback();
 
     } catch (error) {
@@ -26,7 +26,7 @@ export function deleteResource(id, urlBase, resourceName, reloadCallback) {
     alertas(
         "warning",
         `¿Eliminar ${resourceName}?`,
-        `¿Estás seguro de que deseas eliminar esta ${resourceName}?`,
+        `¿Estás seguro de que deseas eliminar este ${resourceName}?`,
         {
             confirmButtonText: "Sí, eliminar",
             cancelButtonText: "Cancelar",

@@ -18,19 +18,19 @@ public class SheduledTask {
     @Autowired
     private ReminderService reminderService;
 
-    @Scheduled(fixedRate = 5000) 
-    public void taskeRecordatorio() {
-        List<Reminder> reminders = reminderService.findAllReminder();
+    // @Scheduled(fixedRate = 5000) 
+    // public void taskeRecordatorio() {
+    //     List<Reminder> reminders = reminderService.findAllReminder();
 
-        for (Reminder reminder : reminders) {
-            String email = reminder.getPatient().getEmail();
-            String name = reminder.getPatient().getName();
-            String medicine = reminder.getMedicine().getName();
-            String date = reminder.getDate().toString();
-            String time = reminder.getTime().toString();
+    //     for (Reminder reminder : reminders) {
+    //         String email = reminder.getPatient().getEmail();
+    //         String name = reminder.getPatient().getName();
+    //         String medicine = reminder.getMedicine().getName();
+    //         String date = reminder.getDate().toString();
+    //         String time = reminder.getTime().toString();
 
-            emailService.avancedEmail(email, name, medicine, date, time);
-            System.out.println("Correo enviado a: " + email);
-        }
-    }
+    //         emailService.avancedEmail(email, name, medicine, date, time);
+    //         System.out.println("Correo enviado a: " + email);
+    //     }
+    // }
 }
