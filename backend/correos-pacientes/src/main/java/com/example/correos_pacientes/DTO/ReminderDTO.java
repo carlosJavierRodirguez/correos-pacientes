@@ -17,4 +17,5 @@ public class ReminderDTO {
     private LocalDate date;
     private LocalTime time;
     private boolean confirmation;
+    private boolean suspended;
 }

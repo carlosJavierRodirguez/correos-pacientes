@@ -40,4 +40,7 @@ public class Reminder {
     @Column(name = "confirmation", nullable = false, columnDefinition = "boolean default false ")
     private boolean confirmation;
 
+    @Column(name = "suspended", nullable = false, columnDefinition = "boolean default false ")
+    private boolean suspended;
+
 }

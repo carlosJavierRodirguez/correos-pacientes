@@ -8,12 +8,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.example.correos_pacientes.DTO.MedicineDTO;
-import com.example.correos_pacientes.DTO.PatientDTO;
+
 import com.example.correos_pacientes.DTO.responseDTO;
 import com.example.correos_pacientes.model.Medicine;
-import com.example.correos_pacientes.model.Patient;
+
 import com.example.correos_pacientes.repository.IMedicine;
-import com.example.correos_pacientes.repository.IPatient;
 
 @Service
 public class MedicineService {

@@ -11,35 +11,35 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.correos_pacientes.DTO.MedicineDTO;
-
+import com.example.correos_pacientes.DTO.ReminderDTO;
 import com.example.correos_pacientes.DTO.responseDTO;
-import com.example.correos_pacientes.service.MedicineService;
+
+import com.example.correos_pacientes.service.ReminderService;
 
 @RestController
-@RequestMapping("/api/v1/medicine")
-public class MedicineController {
+@RequestMapping("/api/v1/reminder")
+public class ReminderController {
     @Autowired
-    private MedicineService medicineService;
+    private ReminderService reminderService;
 
     // guarda los datos
     @PostMapping("/")
-    public ResponseEntity<Object> registerPatient(@RequestBody MedicineDTO medicineDTO) {
-        responseDTO respuesta = medicineService.save(medicineDTO);
+    public ResponseEntity<Object> registerReminder(@RequestBody ReminderDTO reminderDTO) {
+        responseDTO respuesta = reminderService.save(reminderDTO);
         return new ResponseEntity<>(respuesta, HttpStatus.OK);
     }
 
     // lista los datos de la tabla patient
     @GetMapping("/")
-    public ResponseEntity<Object> getAllPatient() {
-        var patientList = medicineService.findAll();
+    public ResponseEntity<Object> getAll() {
+        var patientList = reminderService.findAll();
         return new ResponseEntity<>(patientList, HttpStatus.OK);
     }
 
     // borrar por ID
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deletePatient(@PathVariable int id) {
-        var message = medicineService.deletePatient(id);
+    public ResponseEntity<Object> deleteReminder(@PathVariable int id) {
+        var message = reminderService.deleteReminder(id);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 }
