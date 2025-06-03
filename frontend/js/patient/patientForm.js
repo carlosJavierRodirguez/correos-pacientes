@@ -10,7 +10,8 @@ export function renderPatientForm(data = null) {
     const nombreInput = document.getElementById("nombre");
     const correoInput = document.getElementById("correo");
     const telefonoInput = document.getElementById("telefono");
-    const botonGuardar = document.querySelector("#exampleModal .btn-primary");
+    const botonGuardar = document.getElementById("btn-guardar-paciente");
+
 
     // Cambiar título y valores
     tituloModal.innerHTML = data
@@ -22,7 +23,7 @@ export function renderPatientForm(data = null) {
     telefonoInput.value = data?.telephone || "";
 
     // Mostrar el modal
-    const modal = new bootstrap.Modal(document.getElementById("exampleModal"));
+    const modal = new bootstrap.Modal(document.getElementById("modal-patient"));
     modal.show();
 
     // Limpiar eventos previos

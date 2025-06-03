@@ -8,86 +8,71 @@ import { fetchDataSimple } from "../generica/obtenerDatos.js";
 // FUNCIÓN PARA RENDERIZAR EL FORMULARIO DE RECORDATORIO
 export async function renderReminderForm(data = null) {
     const modalTitle = document.getElementById("exampleModalLabel");
-    const modalForm = document.getElementById("modal-form");
-    const modal = new bootstrap.Modal(document.getElementById("reminder-modal"));
-    const btnGuardar = document.querySelector("#reminder-modal .btn-primary");
+    const selectPatient = document.getElementById("select-patient");
+    const selectMedicine = document.getElementById("select-medicine");
+    const inputDate = document.getElementById("date");
+    const inputTime = document.getElementById("time");
+    const botonGuardar = document.querySelector("#reminder-modal .btn-primary");
 
-    // Cambiar título
+    // Cambiar título del modal
     modalTitle.innerHTML = data
         ? 'Editar Recordatorio <i class="fas fa-bell me-2"></i>'
         : 'Agregar Recordatorio <i class="fas fa-bell me-2"></i>';
 
-    // Llamar datos de pacientes y medicamentos
+    // Obtener pacientes y medicamentos
     const patients = await fetchDataSimple(urlApi.urlPatientes);
     const medicines = await fetchDataSimple(urlApi.urlMedicines);
 
-    // Opciones para pacientes
-    const patientOptions = `
-    <option disabled ${!data ? "selected" : ""}>Selecciona un paciente</option>
-    ${patients
+    // Construir opciones de pacientes
+    selectPatient.innerHTML = `
+        <option disabled ${!data ? "selected" : ""}>Selecciona un paciente</option>
+        ${patients
             .sort((a, b) => a.name.localeCompare(b.name))
-            .map(p =>
-                `<option value="${p.id}" ${p.id === data?.patient_id ? "selected" : ""}>${p.name}</option>`
-            ).join("")}
-`;
-
-    // Opciones para medicamentos
-    const medicineOptions = `
-    <option disabled ${!data ? "selected" : ""}>Selecciona un medicamento</option>
-    ${medicines
-            .sort((a, b) => a.name.localeCompare(b.name))
-            .map(m =>
-                `<option value="${m.id}" ${m.id === data?.medicine_id ? "selected" : ""}>${m.name}</option>`
-            ).join("")}
-`;
-
-
-    // Generar formulario
-    modalForm.innerHTML = `
-        <div class="mb-3">
-            <label for="patientId" class="form-label">Paciente</label>
-            <select class="form-select" id="select-patient">${patientOptions}</select>
-        </div>
-        <div class="mb-3">
-            <label for="medicineId" class="form-label">Medicamento</label>
-           <select class="form-select" id="select-medicine">${medicineOptions}</select>
-        </div>
-        <div class="mb-3">
-            <label for="date" class="form-label">Fecha</label>
-            <input type="date" class="form-control" id="date" value="${data?.date || ''}">
-        </div>
-        <div class="mb-3">
-            <label for="time" class="form-label">Hora</label>
-            <input type="time" class="form-control" id="time" value="${data?.time || ''}">
-        </div>
+            .map(p => `<option value="${p.id}" ${p.id === data?.patient?.id ? "selected" : ""}>${p.name}</option>`)
+            .join("")}
     `;
 
+    // Construir opciones de medicamentos
+    selectMedicine.innerHTML = `
+        <option disabled ${!data ? "selected" : ""}>Selecciona un medicamento</option>
+        ${medicines
+            .sort((a, b) => a.name.localeCompare(b.name))
+            .map(m => `<option value="${m.id}" ${m.id === data?.medicine?.id ? "selected" : ""}>${m.name}</option>`)
+            .join("")}
+    `;
+
+    // Poner valores de fecha y hora
+    inputDate.value = data?.date || "";
+    inputTime.value = data?.time || "";
+
     // Mostrar el modal
+    const modal = new bootstrap.Modal(document.getElementById("reminder-modal"));
     modal.show();
 
     // Limpiar eventos previos
-    const newBtn = btnGuardar.cloneNode(true);
-    btnGuardar.parentNode.replaceChild(newBtn, btnGuardar);
+    const nuevoBoton = botonGuardar.cloneNode(true);
+    botonGuardar.parentNode.replaceChild(nuevoBoton, botonGuardar);
 
-    // Evento guardar
-    newBtn.addEventListener("click", async () => {
+    // Agregar evento de guardado
+    nuevoBoton.addEventListener("click", async () => {
+        // Validar
+        if (!validarFormularioReminder()) return;
+
         const reminder = {
-            patient: document.getElementById("select-patient").value,
-            medicine: document.getElementById("select-medicine").value,
-            date: document.getElementById("date").value.trim(),
-            time: document.getElementById("time").value.trim()
+            patient: { id: parseInt(selectPatient.value) },
+            medicine: { id: parseInt(selectMedicine.value) },
+            date: inputDate.value.trim(),
+            time: inputTime.value.trim()
         };
 
         if (data?.id) reminder.id = data.id;
-        if (!validarFormularioReminder(reminder)) return;
 
-        console.log(reminder);
-        
         await insertarDatos(
             urlApi.urlReminder,
             reminder,
             () => {
                 alertas("success", data ? "Recordatorio actualizado" : "Recordatorio registrado", "Operación exitosa.");
+
                 fetchWithPagination({
                     url: urlApi.urlReminder,
                     containerId: "container-reminder",
@@ -95,7 +80,9 @@ export async function renderReminderForm(data = null) {
                     renderItemFn: renderReminderCard,
                     itemsPerPage: 6
                 });
+
                 modal.hide();
+
             },
             (error) => {
                 alertas("error", "Error", error.message);
@@ -104,14 +91,33 @@ export async function renderReminderForm(data = null) {
     });
 }
 
-function validarFormularioReminder(reminder) {
-    if (!reminder.patient_id || !reminder.medicine_id || !reminder.date || !reminder.time) {
+function validarFormularioReminder() {
+    const selectPatient = document.getElementById("select-patient");
+    const selectMedicine = document.getElementById("select-medicine");
+    const inputDate = document.getElementById("date").value.trim();
+    const inputTime = document.getElementById("time").value.trim();
+
+    if (!selectPatient.value || selectPatient.value === "" ||
+        !selectMedicine.value || selectMedicine.value === "" ||
+        !inputDate || !inputTime) {
         alertas("warning", "Campos requeridos", "Todos los campos son obligatorios.");
         return false;
     }
+
+    // Validar fecha: que no sea pasada
+    const today = new Date();
+    const selectedDate = new Date(inputDate);
+
+    // Quitar hora de today para comparar solo fechas
+    today.setHours(0, 0, 0, 0);
+
+    if (selectedDate < today) {
+        alertas("warning", "Fecha inválida", "La fecha no puede ser anterior a hoy.");
+        return false;
+    }
+
     return true;
 }
-
 
 document.getElementById("btn-add-reminder").addEventListener("click", () => {
     renderReminderForm(); // Modo registrar

@@ -1,7 +1,7 @@
 import { deleteResource } from "../generica/eliminarDato.js";
 import { fetchWithPagination } from "../generica/obtenerDatos.js";
 import { urlApi } from "../urlApis.js";
-import { renderPatientForm } from "./medicineForm.js";
+import { renderPatientForm } from "./patientForm.js";
 
 
 export const reloadPatient = () => {
@@ -20,8 +20,7 @@ export function renderPatientCard(patient) {
     const card = document.createElement("div");
     card.classList.add("col-md-4");
 
-    card.innerHTML = `
-    <div class="mb-4"> <!-- Agrega espacio debajo de la tarjeta -->
+    card.innerHTML = ` <div class="mb-4"> <!-- Agrega espacio debajo de la tarjeta -->
         <div class="card shadow-sm">
             <div class="card-body">
                 <h5 class="card-title">
@@ -46,8 +45,8 @@ export function renderPatientCard(patient) {
                 </div>
             </div>
         </div>
-    </div>
-`;
+    </div> `
+
 
 
     // Botón: Ver Medicamentos

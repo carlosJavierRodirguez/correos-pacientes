@@ -56,7 +56,9 @@ export function renderMedicineForm(data = null) {
                     itemsPerPage: 8
                 });
 
+                const modal = bootstrap.Modal.getInstance(document.getElementById('modalMedicamento'));
                 modal.hide();
+
             },
             (error) => {
                 alertas("error", "Error", error.message);

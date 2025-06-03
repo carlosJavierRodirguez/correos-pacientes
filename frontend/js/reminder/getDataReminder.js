@@ -1,26 +1,27 @@
 import { deleteResource } from "../generica/eliminarDato.js";
 import { fetchWithPagination } from "../generica/obtenerDatos.js";
+import { insertarDatos } from "../generica/insertarDatos.js";
 import { urlApi } from "../urlApis.js";
 import { renderReminderForm } from "./reminderForm.js";
-
+import { alertas } from "../alertas/alertas.js";
 
 export const reloadReminder = () => {
-    const container = document.getElementById("container-reminder");
-    container.innerHTML = ""; // Limpia el contenedor
-    fetchWithPagination({
-        url: urlApi.urlReminder,
-        containerId: "container-reminder",
-        paginationId: "pagination-reminder",
-        renderItemFn: renderReminderCard,
-        itemsPerPage: 6
-    });
+  const container = document.getElementById("container-reminder");
+  container.innerHTML = ""; // Limpia el contenedor
+  fetchWithPagination({
+    url: urlApi.urlReminder,
+    containerId: "container-reminder",
+    paginationId: "pagination-reminder",
+    renderItemFn: renderReminderCard,
+    itemsPerPage: 6
+  });
 };
 
 export function renderReminderCard(reminder) {
-    const card = document.createElement("div");
-    card.classList.add("col-md-4");
+  const card = document.createElement("div");
+  card.classList.add("col-md-4");
 
-    card.innerHTML = `
+  card.innerHTML = `
   <div class="mb-4">
     <div class="card shadow-sm">
       <div class="card-body">
@@ -38,6 +39,7 @@ export function renderReminderCard(reminder) {
             <p class="card-text"><strong>Hora:</strong> ${reminder.time}</p>
           </div>
           <div class="col-md-4 d-flex align-items-center mt-3">
+
             <div class="form-check form-switch">
               <input class="form-check-input toggle-switch" type="checkbox" id="toggleReminder-${reminder.id}" 
               ${!reminder.suspended ? "checked" : ""}>
@@ -62,28 +64,61 @@ export function renderReminderCard(reminder) {
 `;
 
 
- // Botón: Editar
-    card.querySelector(".btn-edit").addEventListener("click", () => {
-        renderReminderForm(reminder); 
-    });
+  // Botón: Editar
+  card.querySelector(".btn-edit").addEventListener("click", () => {
+    renderReminderForm(reminder);
+  });
+
+  card.querySelector(`#toggleReminder-${reminder.id}`).addEventListener("change", () => {
+    toggleReminderSuspension(reminder.id, reminder);
+  });
 
 
+  // Botón: Eliminar
+  card.querySelector(".btn-delete").addEventListener("click", () => {
+    deleteResource(reminder.id, urlApi.urlReminder, "Recordatorio", reloadReminder);
+  });
 
-    // Botón: Eliminar
-    card.querySelector(".btn-delete").addEventListener("click", () => {
-        deleteResource(reminder.id, urlApi.urlReminder, "Recordatorio", reloadReminder);
-    });
+  return card;
+}
 
-    return card;
+export async function toggleReminderSuspension(id, reminder) {
+  const nuevoEstado = !reminder.suspended; // Cambia true ⇄ false
+
+  const updatedReminder = {
+    id: id,
+    patient: { id: reminder.patient.id },
+    medicine: { id: reminder.medicine.id },
+    date: reminder.date,
+    time: reminder.time,
+    suspended: nuevoEstado.toString() // "true" o "false" como string
+  };
+
+  try {
+    await insertarDatos(
+      urlApi.urlReminder,
+      updatedReminder,
+      () => {
+        const estadoTexto = nuevoEstado ? "desactivado" : "activado";
+        alertas("success", "Estado actualizado", `Recordatorio ${estadoTexto} correctamente`);
+        reloadReminder(); // Asegúrate de tener esta función o reemplaza por fetchReminderCards
+      },
+      (error) => {
+        alertas("error", "Error", error.message);
+      }
+    );
+  } catch (error) {
+    alertas("error", "Error", "No se pudo actualizar el recordatorio.");
+  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    fetchWithPagination({
-        url: urlApi.urlReminder,
-        containerId: "container-reminder",
-        paginationId: "pagination-reminder",
-        renderItemFn: renderReminderCard,
-        itemsPerPage: 6
-    });
+  fetchWithPagination({
+    url: urlApi.urlReminder,
+    containerId: "container-reminder",
+    paginationId: "pagination-reminder",
+    renderItemFn: renderReminderCard,
+    itemsPerPage: 6
+  });
 });
