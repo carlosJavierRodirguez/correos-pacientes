@@ -29,9 +29,9 @@
 
             <!-- Main content -->
             <div class="col-md-10 p-4">
-
-                <h2 class=" align-items-center">
+                <h2 class="align-items-center">
                     <i class="fas fa-user-friends me-2"></i>Pacientes
+                    
                     <button class="btn btn-primary rounded-circle ms-auto" aria-label="Agregar paciente"
                         data-bs-toggle="modal" data-bs-target="#exampleModal" id="btnAgregarPaciente">
                         <i class="fas fa-plus"></i>
@@ -41,9 +41,7 @@
                 <!-- Contenedor de paginación separado -->
                 <ul id="paginationPatiend" class="pagination justify-content-end mt-3"></ul>
                 <div class="row mt-4" id="container-pacientes">
-
                     <!-- Tarjeta de paciente -->
-
                 </div>
             </div>
         </div>
@@ -60,24 +58,19 @@
                 <div class="modal-body">
                     <form>
                         <div class="row">
-
                             <div class="mb-3 col-12">
                                 <label for="nombre" class="form-label">Nombre</label>
                                 <input type="text" class="form-control" id="nombre" placeholder="Nombre del paciente">
                             </div>
-
                             <div class="mb-3 col-6">
                                 <label for="correo" class="form-label">Correo Electrónico</label>
                                 <input type="email" class="form-control" id="correo" placeholder="ejemplo@gmail.com">
                             </div>
-
                             <div class="mb-3 col-6">
                                 <label for="telefono" class="form-label">Teléfono</label>
                                 <input type="tel" class="form-control" id="telefono" placeholder="3188888880">
                             </div>
-
                         </div>
-
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -88,18 +81,16 @@
         </div>
     </div>
 
-    <!-- patient -->
+    <!-- Scripts -->
+    <!-- Código de paciente -->
     <script type="module" src="js/patient/getDataPatient.js"></script>
-
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-
-
-    <!--Alertas-->
+    <!-- Alertas -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 </body>
+
 
 </html>
