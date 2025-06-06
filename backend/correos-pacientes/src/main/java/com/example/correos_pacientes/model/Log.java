@@ -5,8 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+
 import lombok.*;
 
 @Data
@@ -19,7 +18,12 @@ public class Log {
     @Column(name = "id")
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "reminder_id", referencedColumnName = "id")
-    private Reminder reminder;
+    @Column(name = "email", length = 100, nullable = false)
+    private String email;
+
+    @Column(name = "name", length = 100, nullable = false)
+    private String name;
+
+    @Column(name = "email-tipe", length = 100, nullable = false)
+    private String tipoEmail;
 }

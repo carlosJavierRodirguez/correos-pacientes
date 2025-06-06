@@ -12,7 +12,7 @@ export const reloadPatient = () => {
     containerId: "container-pacientes",
     paginationId: "paginationPatiend",
     renderItemFn: renderPatientCard,
-    itemsPerPage: 6
+    itemsPerPage: 3
   });
 };
 
@@ -21,45 +21,66 @@ export function renderPatientCard(patient) {
   card.classList.add("col-12", "col-sm-6", "col-md-4", "mb-4");
 
   card.innerHTML = `
-  <div class="card shadow-sm h-100">
-    <div class="card-body d-flex flex-column">
-      <h5 class="card-title d-flex align-items-center mb-3">
-        <i class="fas fa-user me-2 text-primary"></i> ${patient.name}
-      </h5>
-      <p class="card-text mb-1">
-        <strong>Correo:</strong> ${patient.email}
-      </p>
-      <p class="card-text mb-3">
-        <strong>Tel:</strong> ${patient.telephone}
-      </p>
-      <div class="mt-auto d-flex flex-wrap gap-2 justify-content-between">
-        <button class="btn btn-primary btn-sm flex-grow-1" data-id="${patient.id}">
-          <i class="fas fa-eye me-1"></i> Ver Medicamentos
+<div class="card shadow h-100 border-0">
+  <!-- Header de la tarjeta -->
+  <div class="card-header bg-primary text-white border-0">
+    <h6 class="card-title d-flex align-items-center mb-0">
+      <span class="badge bg-light text-primary rounded-circle p-2 me-3">
+       <i class="fa-regular fa-user"></i>
+      </span>
+      <div>
+        <div class="fw-bold">${patient.name}</div>
+      </div>
+    </h6>
+  </div>
+
+  <!-- Cuerpo de la tarjeta -->
+  <div class="card-body d-flex flex-column">
+    <!-- Información del paciente -->
+    <div class="mb-4">
+      <div class="d-flex align-items-center mb-3 p-2 bg-light rounded">
+        <div class="text-primary me-3">
+          <i class="fas fa-envelope fa-lg"></i>
+        </div>
+        <div class="flex-grow-1">
+          <small class="text-muted d-block">Correo electrónico</small>
+          <span class="fw-medium text-truncate d-block">${patient.email}</span>
+        </div>
+      </div>
+      
+      <div class="d-flex align-items-center p-2 bg-light rounded">
+        <div class="text-success me-3">
+          <i class="fas fa-phone fa-lg"></i>
+        </div>
+        <div class="flex-grow-1">
+          <small class="text-muted d-block">Teléfono</small>
+          <span class="fw-medium">${patient.telephone}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botones de acción -->
+    <div class="mt-auto">
+      <!-- Botones secundarios -->
+      <div class="btn-group w-100" role="group">
+        <button class="btn btn-outline-primary btn-edit-patient" data-id="${patient.id}">
+          <i class="fas fa-edit me-1"></i>
+          <span class="d-none d-sm-inline">Editar</span>
         </button>
-        <button class="btn btn-outline-primary btn-sm flex-grow-1 btn-edit-patient" data-id="${patient.id}">
-          <i class="fas fa-edit me-1"></i> Editar
-        </button>
-        <button class="btn btn-outline-danger btn-sm flex-grow-1 btn-delete" data-id="${patient.id}">
-          <i class="fas fa-trash me-1"></i> Eliminar
+        <button class="btn btn-outline-danger btn-delete" data-id="${patient.id}">
+          <i class="fas fa-trash-alt me-1"></i>
+          <span class="d-none d-sm-inline">Eliminar</span>
         </button>
       </div>
     </div>
   </div>
+</div>
 `;
 
-  // Botón: Ver Medicamentos
-  // card.querySelector(".btn-view-meds").addEventListener("click", (e) => {
-  //     const id = e.currentTarget.getAttribute("data-id");
-  //     // Lógica para ver medicamentos asociados
-  //     verMedicamentosPaciente(id);
-  // });
-
-  // Botón: Editar
   card.querySelector(".btn-edit-patient").addEventListener("click", () => {
-    renderPatientForm(patient); // Muestra el formulario con los datos del paciente
+    renderPatientForm(patient);
   });
 
-  // Botón: Eliminar
   card.querySelector(".btn-delete").addEventListener("click", () => {
     deleteResource(patient.id, urlApi.urlPatientes, "Paciente", reloadPatient);
   });
@@ -74,6 +95,6 @@ document.addEventListener("DOMContentLoaded", () => {
     containerId: "container-pacientes",
     paginationId: "paginationPatiend",
     renderItemFn: renderPatientCard,
-    itemsPerPage: 6
+    itemsPerPage: 3
   });
 });

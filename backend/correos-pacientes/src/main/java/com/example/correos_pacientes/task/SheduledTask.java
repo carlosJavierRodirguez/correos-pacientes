@@ -18,6 +18,8 @@ public class SheduledTask {
     @Autowired
     private ReminderService reminderService;
 
+    // verifica cada 5 minutos si hay reminders pendientes para notificar a
+    // lospacientes
     @Scheduled(fixedRate = 50000)
     public void taskeRecordatorio() {
         List<Reminder> reminders = reminderService.findAllReminder();
@@ -29,8 +31,13 @@ public class SheduledTask {
             String date = reminder.getDate().toString();
             String time = reminder.getTime().toString();
 
-            emailService.avancedEmail(email, name, medicine, date, time);
-            System.out.println("Correo enviado a: " + email);
+            try {
+                emailService.reminderEmail(email, name, medicine, date, time);
+                System.out.println("✅ Correo enviado a: " + email);
+            } catch (Exception e) {
+                System.err.println("❌ Error al enviar correo a: " + email);
+                e.printStackTrace();
+            }
         }
     }
 }

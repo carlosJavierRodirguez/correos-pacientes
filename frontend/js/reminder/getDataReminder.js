@@ -13,55 +13,93 @@ export const reloadReminder = () => {
     containerId: "container-reminder",
     paginationId: "pagination-reminder",
     renderItemFn: renderReminderCard,
-    itemsPerPage: 6
+    itemsPerPage: 3
   });
 };
 
 export function renderReminderCard(reminder) {
   const card = document.createElement("div");
-  card.classList.add("col-md-4");
+  card.classList.add("col-12", "col-sm-6", "col-md-4", "mb-4");
 
   card.innerHTML = `
-  <div class="mb-4">
-    <div class="card shadow-sm">
-      <div class="card-body">
-        <h5 class="card-title mb-3">
-          <i class="fas fa-notes-medical me-2"></i> Recordatorio para ${reminder.patient.name}
-        </h5>
-        <div class="row">
-          <div class="col-md-12">
-            <p class="card-text"><strong>Medicamento:</strong> ${reminder.medicine.name}</p>
-          </div>
-          <div class="col-md-6">
-            <p class="card-text"><strong>Fecha:</strong> ${reminder.date}</p>
-          </div>
-          <div class="col-md-6">
-            <p class="card-text"><strong>Hora:</strong> ${reminder.time}</p>
-          </div>
-          <div class="col-md-4 d-flex align-items-center mt-3">
+<div class="card shadow h-100 border-0">
+  <!-- Header de la tarjeta -->
+  <div class="card-header bg-primary text-white border-0">
+    <h6 class="card-title d-flex align-items-center mb-0">
+      <span class="badge bg-light text-primary rounded-circle p-2 me-3">
+        <i class="fas fa-notes-medical"></i>
+      </span>
+      <div>
+        <div class="fw-bold">Recordatorio para ${reminder.patient.name}</div>
+      </div>
+    </h6>
+  </div>
 
-            <div class="form-check form-switch">
-              <input class="form-check-input toggle-switch" type="checkbox" id="toggleReminder-${reminder.id}" 
-              ${!reminder.suspended ? "checked" : ""}>
-              <label class="form-check-label ms-2" for="toggleReminder-${reminder.id}">
-                ${!reminder.suspended ? "Activado" : "Desactivado"}
-              </label>
-            </div>
-          </div>
+  <!-- Cuerpo de la tarjeta -->
+  <div class="card-body d-flex flex-column">
+    <!-- Información del recordatorio -->
+    <div class="mb-4">
+      <div class="d-flex align-items-center mb-3 p-2 bg-light rounded">
+        <div class="text-info me-3">
+          <i class="fas fa-pills fa-lg"></i>
         </div>
+        <div class="flex-grow-1">
+          <small class="text-muted d-block">Medicamento</small>
+          <span class="fw-medium">${reminder.medicine.name}</span>
+        </div>
+      </div>
 
-        <div class="d-flex justify-content-between mt-4">
-          <button class="btn btn-outline-primary btn-sm btn-edit" data-id="${reminder.id}">
-            <i class="fas fa-edit me-1"></i> Editar
-          </button>
-          <button class="btn btn-outline-danger btn-sm btn-delete" data-id="${reminder.id}">
-            <i class="fas fa-trash me-1"></i> Eliminar
-          </button>
+      <div class="d-flex align-items-center mb-3 p-2 bg-light rounded">
+        <div class="text-warning me-3">
+          <i class="fas fa-calendar-day fa-lg"></i>
+        </div>
+        <div class="flex-grow-1">
+          <small class="text-muted d-block">Fecha</small>
+          <span class="fw-medium">${reminder.date}</span>
+        </div>
+      </div>
+
+      <div class="d-flex align-items-center p-2 bg-light rounded">
+        <div class="text-success me-3">
+          <i class="fas fa-clock fa-lg"></i>
+        </div>
+        <div class="flex-grow-1">
+          <small class="text-muted d-block">Hora</small>
+          <span class="fw-medium">${reminder.time}</span>
+        </div>
+      </div>
+
+      <!-- Interruptor de activación -->
+      <div class="d-flex align-items-center p-2 mt-3 bg-light rounded">
+        <div class="flex-grow-1 d-flex align-items-center">
+          <div class="form-check form-switch m-0">
+            <input class="form-check-input toggle-switch" type="checkbox" id="toggleReminder-${reminder.id}" 
+              ${!reminder.suspended ? "checked" : ""}>
+            <label class="form-check-label ms-2" for="toggleReminder-${reminder.id}">
+              ${!reminder.suspended ? "Activado" : "Desactivado"}
+            </label>
+          </div>
         </div>
       </div>
     </div>
+
+    <!-- Botones de acción -->
+    <div class="mt-auto">
+      <div class="btn-group w-100" role="group">
+        <button class="btn btn-outline-primary btn-edit" data-id="${reminder.id}">
+          <i class="fas fa-edit me-1"></i>
+          <span class="d-none d-sm-inline">Editar</span>
+        </button>
+        <button class="btn btn-outline-danger btn-delete" data-id="${reminder.id}">
+          <i class="fas fa-trash me-1"></i>
+          <span class="d-none d-sm-inline">Eliminar</span>
+        </button>
+      </div>
+    </div>
   </div>
+</div>
 `;
+
 
 
   // Botón: Editar
@@ -119,6 +157,6 @@ document.addEventListener("DOMContentLoaded", () => {
     containerId: "container-reminder",
     paginationId: "pagination-reminder",
     renderItemFn: renderReminderCard,
-    itemsPerPage: 6
+    itemsPerPage: 3
   });
 });
